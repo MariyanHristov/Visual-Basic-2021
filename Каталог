@@ -1,0 +1,62 @@
+Public Class Form1
+    Dim Products(10)
+    Dim Price(10)
+    Dim I As Integer
+    Dim Sum As Double
+    Private Sub InitProducts()
+        Products(0) = "Магнитни наколенки"
+        Products(1) = "Магнитен колан"
+        Products(2) = "Магни Иър"
+        Products(3) = "Масажираща седалка"
+        Products(4) = "Сауна за лице"
+        Products(5) = "Електирческо одеално"
+        Products(6) = "Инфраред масажор за тяло"
+        Products(7) = "Гривна за баланс"
+        Products(8) = "Цитрус Джусер"
+        Products(9) = "Апарат за кръвно налягане"
+    End Sub
+    Private Sub InitPrice()
+        Price(0) = 59.9
+        Price(1) = 39.9
+        Price(2) = 39.9
+        Price(3) = 59.9
+        Price(4) = 49.9
+        Price(5) = 56.9
+        Price(6) = 147.0
+        Price(7) = 54.9
+        Price(8) = 49.9
+        Price(9) = 109.9
+    End Sub
+    Private Sub LoadList()
+        For I = 0 To 9
+            ComboBox1.Items.Add(Products(I))
+        Next
+    End Sub
+
+    Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        InitProducts()
+        InitPrice()
+        LoadList()
+        Label6.Text = FormatCurrency("0.00", 2)
+    End Sub
+
+    Private Sub ComboBox1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ComboBox1.SelectedIndexChanged
+        I = Val(ComboBox1.SelectedIndex.ToString)
+        Label5.Text = FormatCurrency(Price(I), 2)
+    End Sub
+
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+        ListBox1.Items.Add(ComboBox1.Text)
+        I = Val(ComboBox1.SelectedIndex.ToString)
+        Sum = Sum + Price(I)
+        Label6.Text = FormatCurrency(Sum, 2)
+    End Sub
+
+    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
+        For I = 0 To 9
+            If Products(I) = ListBox1.SelectedItem Then Sum -= Price(I)
+        Next
+        ListBox1.Items.Remove(ListBox1.SelectedItem)
+        Label6.Text = FormatCurrency(Sum, 2)
+    End Sub
+End Class
